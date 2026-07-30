@@ -4,8 +4,13 @@
     "titulo": "Pikachu IncaKola"
   },
   {
-    "codigo": "PR-001",
-    "titulo": "Aventuras Eléctricas",
+    "codigo": "GR-OD001",
+    "titulo": "Oddish"
+  },
+
+  {
+    "codigo": "PR-OD001",
+    "titulo": "Baila Oddish",
     "precio": 2
   }
 ]
