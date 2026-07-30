@@ -5,66 +5,11 @@
     "duracion_seleccion_premium_minutos": 120,
     "marca_agua": "HUNTER STICKERS · MUESTRA"
   },
-  "productos": [
-    {
-      "codigo": "GR-001",
-      "titulo": "Hunter Feliz",
-      "categoria": "pets"
-    },
-    {
-      "codigo": "GR-PIKA001",
-      "titulo": "Pikachu IncaKola",
-      "categoria": "pokemon"
-    },
-    {
-      "codigo": "GR-003",
-      "titulo": "Noche Rosada",
-      "categoria": "series",
-      "tipo": "wallpaper-celular"
-    },
-    {
-      "codigo": "GR-004",
-      "titulo": "Ciudad Nocturna",
-      "categoria": "dc",
-      "tipo": "wallpaper-escritorio"
-    },
-    {
-      "codigo": "PR-001",
-      "titulo": "Aventuras Eléctricas",
-      "categoria": "pokemon",
-      "precio": 2
-    },
-    {
-      "codigo": "PR-002",
-      "titulo": "Héroes en Acción",
-      "categoria": "marvel",
-      "precio": 2
-    },
-    {
-      "codigo": "PR-003",
-      "titulo": "Gatitos con Actitud",
-      "categoria": "pets",
-      "precio": 2
-    },
-    {
-      "codigo": "PR-004",
-      "titulo": "Guardianes Nocturnos",
-      "categoria": "dc",
-      "tipo": "wallpaper-celular",
-      "precio": 2
-    },
-    {
-      "codigo": "PR-005",
-      "titulo": "Maratón de Series",
-      "categoria": "series",
-      "precio": 1
-    },
-    {
-      "codigo": "PR-006",
-      "titulo": "Universo Heroico",
-      "categoria": "marvel",
-      "tipo": "wallpaper-escritorio",
-      "precio": 3
-    }
+  "archivos": [
+    "pokemon.json",
+    "marvel.json",
+    "dc.json",
+    "pets.json",
+    "series.json"
   ]
 }

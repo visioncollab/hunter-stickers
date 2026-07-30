@@ -210,7 +210,18 @@ async function initCatalog() {
     const response = await fetch('data/catalogo.json', {cache:'no-store'});
     if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
     state.catalog = await response.json();
-    state.products = (state.catalog.productos || []).map(normalizeProduct);
+
+    const files = Array.isArray(state.catalog.archivos) ? state.catalog.archivos : [];
+    const groups = await Promise.all(files.map(async file => {
+      const category = String(file).replace(/\.json$/i, '');
+      const categoryResponse = await fetch(`data/categorias/${file}`, {cache:'no-store'});
+      if (!categoryResponse.ok) throw new Error(`${file}: HTTP ${categoryResponse.status}`);
+      const products = await categoryResponse.json();
+      if (!Array.isArray(products)) throw new Error(`${file} debe contener una lista de productos`);
+      return products.map(product => ({...product, categoria: category}));
+    }));
+
+    state.products = groups.flat().map(normalizeProduct);
     renderProducts();
     state.selection = readSelection();
     saveSelection();

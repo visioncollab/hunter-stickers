@@ -1,78 +1,77 @@
-# Hunter Stickers - catalogo simple
+# Hunter Stickers v22
 
-Abre el proyecto con Live Server o publícalo en GitHub Pages para que `catalogo.json` cargue correctamente.
+Abre el proyecto con Live Server o publícalo en GitHub Pages. Los archivos JSON no cargan correctamente al abrir `index.html` directamente con doble clic.
 
-## Agregar un producto
+## Cómo agregar un producto
 
-### 1. Añade una entrada en `data/catalogo.json`
+### 1. Elige la categoría
 
-Producto gratis:
+Los productos están separados en:
+
+```text
+data/categorias/
+├── pokemon.json
+├── marvel.json
+├── dc.json
+├── pets.json
+└── series.json
+```
+
+La categoría se detecta automáticamente por el nombre del archivo. Ya no necesitas escribir `"categoria"` dentro de cada producto.
+
+### 2. Añade una entrada
+
+Gratis:
 
 ```json
 {
   "codigo": "GR-005",
-  "titulo": "Nombre del producto",
-  "categoria": "pokemon"
+  "titulo": "Nuevo pack gratis"
 }
 ```
 
-Producto premium:
+Premium:
 
 ```json
 {
   "codigo": "PR-007",
-  "titulo": "Nombre del producto",
-  "categoria": "marvel",
+  "titulo": "Nuevo pack premium",
   "precio": 2
 }
 ```
 
-El prefijo decide automáticamente el comportamiento:
-
-- `GR-` = descarga gratis.
-- `PR-` = producto premium, Yape y WhatsApp.
-
-### 2. Coloca un único PNG
-
-El PNG debe llamarse exactamente igual que el código.
-
-Ejemplos:
-
-```text
-assets/productos/gratis/pokemon/GR-005.png
-assets/productos/premium/marvel/PR-007.png
-```
-
-No escribas la ruta en el JSON. La web la construye automáticamente.
-
-## Categorías permitidas
-
-- `series`
-- `pokemon`
-- `pets`
-- `marvel`
-- `dc`
-
-Las carpetas físicas correspondientes son:
-
-- `series-peliculas`
-- `pokemon`
-- `mascotas`
-- `marvel`
-- `dc`
-
-## Wallpapers
-
-Para diferenciar un wallpaper puedes añadir opcionalmente:
+Para wallpapers puedes añadir:
 
 ```json
 "tipo": "wallpaper-celular"
 ```
 
-o
+o:
 
 ```json
 "tipo": "wallpaper-escritorio"
 ```
 
-Este campo no cambia la ruta del PNG; solo queda disponible para futuras mejoras o filtros.
+### 3. Coloca el PNG
+
+El nombre debe ser exactamente igual al código.
+
+Ejemplo para `PR-007` dentro de `pokemon.json`:
+
+```text
+assets/productos/premium/pokemon/PR-007.png
+```
+
+Ejemplo para `GR-005` dentro de `pets.json`:
+
+```text
+assets/productos/gratis/mascotas/GR-005.png
+```
+
+## Agregar una categoría nueva
+
+1. Crea, por ejemplo, `data/categorias/anime.json`.
+2. Añade `"anime.json"` en la lista `archivos` de `data/catalogo.json`.
+3. Crea las carpetas correspondientes dentro de `assets/productos/gratis/` y `assets/productos/premium/`.
+
+`data/catalogo.json` ahora es pequeño: solo guarda la configuración general y la lista de archivos de categorías.
