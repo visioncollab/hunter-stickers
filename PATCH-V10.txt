@@ -1,0 +1,16 @@
+# Patch V10
+
+1. Incluye:
+<script src="js/device-download.js"></script>
+
+2. Cambia el botón del popup por:
+
+<button id="btnDescargaFinal" onclick="descargarSticker(rutaPng)"></button>
+
+El texto cambiará automáticamente:
+
+- Celular -> 📱 Guardar en mi teléfono
+- PC -> 💾 Descargar PNG
+
+En móviles compatibles abrirá el menú nativo para guardar/compartir.
+Si no es compatible, descargará el PNG normalmente.
