@@ -1,42 +1,22 @@
 [
   {
-    "titulo": "Perrito Hola",
-    "archivo": "perrito-hola",
+    "titulo": "Hunter",
+    "archivo": "001",
     "busqueda": "hunter perro mascota hola"
   },
   {
-    "titulo": "Amigo eléctrico",
-    "archivo": "amigo-electrico",
-    "busqueda": "electrico amarillo divertido"
+    "titulo": "Pika Pika InkaKola",
+    "archivo": "002",
+    "busqueda": "electrico amarillo divertido pikachu"
   },
   {
-    "titulo": "Amigo de fuego",
-    "archivo": "amigo-de-fuego",
+    "titulo": "Charmander Cola",
+    "archivo": "003",
     "busqueda": "fuego naranja personaje"
   },
   {
-    "titulo": "Modo serie",
-    "archivo": "modo-serie",
+    "titulo": "Bulbasaur Pelicula",
+    "archivo": "004",
     "busqueda": "serie pelicula divertido"
-  },
-  {
-    "titulo": "Héroe nocturno",
-    "archivo": "heroe-nocturno",
-    "busqueda": "heroe nocturno comic"
-  },
-  {
-    "titulo": "Mascota feliz",
-    "archivo": "mascota-feliz",
-    "busqueda": "mascota feliz perro"
-  },
-  {
-    "titulo": "Héroe rojo",
-    "archivo": "heroe-rojo",
-    "busqueda": "heroe rojo comic"
-  },
-  {
-    "titulo": "Momento divertido",
-    "archivo": "momento-divertido",
-    "busqueda": "momento divertido serie"
   }
 ]
