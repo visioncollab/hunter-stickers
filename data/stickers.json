@@ -1,0 +1,42 @@
+[
+  {
+    "titulo": "Perrito Hola",
+    "archivo": "perrito-hola",
+    "busqueda": "hunter perro mascota hola"
+  },
+  {
+    "titulo": "Amigo eléctrico",
+    "archivo": "amigo-electrico",
+    "busqueda": "electrico amarillo divertido"
+  },
+  {
+    "titulo": "Amigo de fuego",
+    "archivo": "amigo-de-fuego",
+    "busqueda": "fuego naranja personaje"
+  },
+  {
+    "titulo": "Modo serie",
+    "archivo": "modo-serie",
+    "busqueda": "serie pelicula divertido"
+  },
+  {
+    "titulo": "Héroe nocturno",
+    "archivo": "heroe-nocturno",
+    "busqueda": "heroe nocturno comic"
+  },
+  {
+    "titulo": "Mascota feliz",
+    "archivo": "mascota-feliz",
+    "busqueda": "mascota feliz perro"
+  },
+  {
+    "titulo": "Héroe rojo",
+    "archivo": "heroe-rojo",
+    "busqueda": "heroe rojo comic"
+  },
+  {
+    "titulo": "Momento divertido",
+    "archivo": "momento-divertido",
+    "busqueda": "momento divertido serie"
+  }
+]
