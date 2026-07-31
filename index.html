@@ -171,7 +171,7 @@ footer{border-top:1px solid #e1e8ea;padding:24px 0;text-align:center;color:var(-
 </main>
 <footer><div class="shell">© 2026 Hunter Stickers · Diseñado para compartir y divertirte</div></footer>
 <div class="modal" id="conditionsModal"><div class="modal-box"><button class="close" id="closeConditions">×</button><h2>Condiciones de uso</h2><h3>Descargas gratuitas</h3><p>Los stickers gratuitos se ofrecen para uso personal. Puedes descargarlos y compartirlos en tus conversaciones.</p><h3>Uso comercial</h3><p>No está permitida su reventa, redistribución como producto propio ni su inclusión en colecciones de pago sin autorización.</p><h3>Solicitudes personalizadas</h3><p>El precio, plazo y alcance se confirman directamente por WhatsApp antes de iniciar.</p></div></div>
-<div class="modal" id="downloadModal"><div class="modal-box thanks"><button class="close" id="closeDownload">×</button><div class="thanks-icon">🎉</div><h2>¡Gracias por descargar!</h2><p>Tu sticker <strong id="downloadName"></strong> está listo.</p><div class="actions"><a id="downloadNow" class="download-now" href="#" target="_blank" rel="noopener">↓ Descargar ahora</a><button class="secondary" id="closeDownloadSecondary">Seguir viendo</button></div></div></div>
+<div class="modal" id="downloadModal"><div class="modal-box thanks"><button class="close" id="closeDownload">×</button><div class="thanks-icon">🎉</div><h2 id="downloadTitle">¡Tu sticker está listo!</h2><p id="downloadHelp">Elige cómo deseas guardarlo.</p><p><strong id="downloadName"></strong></p><div class="actions"><button id="downloadNow" class="download-now" type="button">↓ Descargar ahora</button><button class="secondary" id="closeDownloadSecondary">Seguir viendo</button></div></div></div>
 <script>
 const menuToggle=document.getElementById('menuToggle'),mainNav=document.getElementById('mainNav');menuToggle.addEventListener('click',()=>{const open=mainNav.classList.toggle('open');menuToggle.innerHTML=open?'<i class="fa-solid fa-xmark"></i> CERRAR':'<i class="fa-solid fa-bars"></i> MENÚ';menuToggle.setAttribute('aria-expanded',open)});mainNav.querySelectorAll('a,button').forEach(el=>el.addEventListener('click',()=>{if(innerWidth<=900){mainNav.classList.remove('open');menuToggle.innerHTML='<i class="fa-solid fa-bars"></i> MENÚ'}}));
 const products=document.getElementById('products'),moreBtn=document.getElementById('moreBtn'),search=document.getElementById('search'),empty=document.getElementById('empty');
@@ -191,13 +191,56 @@ function crearTarjeta(sticker,index){
   return article;
 }
 
+let descargaActual={archivo:'',titulo:''};
+const esMovil=()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||window.matchMedia('(max-width: 768px)').matches;
+
 function enlazarDescargas(){
   document.querySelectorAll('.download').forEach(btn=>btn.addEventListener('click',()=>{
-    downloadNow.href=btn.dataset.file;
-    downloadNow.setAttribute('download',btn.dataset.file.split('/').pop());
+    descargaActual={archivo:btn.dataset.file,titulo:btn.dataset.title};
     downloadName.textContent=btn.dataset.title;
+    document.getElementById('downloadTitle').textContent=esMovil()?'¿Guardar este sticker en tu galería?':'¡Tu sticker está listo!';
+    document.getElementById('downloadHelp').textContent=esMovil()?'Toca el botón y luego elige “Guardar imagen” o “Guardar en Fotos”.':'Pulsa el botón para descargar el archivo PNG.';
+    downloadNow.innerHTML=esMovil()?'<i class="fa-solid fa-image"></i> Guardar en mi galería':'<i class="fa-solid fa-download"></i> Descargar PNG';
     downloadModal.classList.add('open');
   }));
+}
+
+async function guardarSticker(){
+  if(!descargaActual.archivo)return;
+  const nombre=descargaActual.archivo.split('/').pop()||'hunter-sticker.png';
+  downloadNow.disabled=true;
+  const textoOriginal=downloadNow.innerHTML;
+  downloadNow.textContent='Preparando...';
+  try{
+    const respuesta=await fetch(descargaActual.archivo,{cache:'no-store'});
+    if(!respuesta.ok)throw new Error('No se pudo cargar la imagen');
+    const blob=await respuesta.blob();
+    const archivo=new File([blob],nombre,{type:blob.type||'image/png'});
+
+    if(esMovil()&&navigator.share&&navigator.canShare&&navigator.canShare({files:[archivo]})){
+      await navigator.share({files:[archivo],title:descargaActual.titulo,text:'Hunter Stickers'});
+      closeDownload();
+      return;
+    }
+
+    const url=URL.createObjectURL(blob);
+    const enlace=document.createElement('a');
+    enlace.href=url;
+    enlace.download=nombre;
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    closeDownload();
+  }catch(error){
+    if(error&&error.name==='AbortError')return;
+    console.error(error);
+    window.open(descargaActual.archivo,'_blank','noopener');
+    alert(esMovil()?'Se abrió la imagen. Mantenla presionada y elige “Guardar en Fotos” o “Descargar imagen”.':'No se pudo descargar automáticamente. La imagen se abrió en otra pestaña.');
+  }finally{
+    downloadNow.disabled=false;
+    downloadNow.innerHTML=textoOriginal;
+  }
 }
 
 function renderStickers(lista=stickers){
@@ -237,7 +280,7 @@ search.addEventListener('input',()=>{
 
 cargarStickers();
 const conditionsModal=document.getElementById('conditionsModal');document.getElementById('openConditions').onclick=()=>conditionsModal.classList.add('open');document.getElementById('closeConditions').onclick=()=>conditionsModal.classList.remove('open');
-const downloadModal=document.getElementById('downloadModal'),downloadNow=document.getElementById('downloadNow'),downloadName=document.getElementById('downloadName');const closeDownload=()=>downloadModal.classList.remove('open');document.getElementById('closeDownload').onclick=closeDownload;document.getElementById('closeDownloadSecondary').onclick=closeDownload;[conditionsModal,downloadModal].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+const downloadModal=document.getElementById('downloadModal'),downloadNow=document.getElementById('downloadNow'),downloadName=document.getElementById('downloadName');const closeDownload=()=>downloadModal.classList.remove('open');downloadNow.addEventListener('click',guardarSticker);document.getElementById('closeDownload').onclick=closeDownload;document.getElementById('closeDownloadSecondary').onclick=closeDownload;[conditionsModal,downloadModal].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
 document.getElementById('customForm').addEventListener('submit',e=>{e.preventDefault();const personaje=document.getElementById('character').value.trim(),descripcion=document.getElementById('description').value.trim();const msg=`Hola, quiero cotizar un sticker personalizado.\n\nPersonaje: ${personaje}\nDescripción: ${descripcion}\n\nEntiendo que este servicio tiene un costo y deseo recibir una cotización.`;window.open(`https://wa.me/51982006001?text=${encodeURIComponent(msg)}`,'_blank','noopener')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){conditionsModal.classList.remove('open');downloadModal.classList.remove('open')}});
 </script>
